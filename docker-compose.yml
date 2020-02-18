@@ -23,7 +23,7 @@ services:
 
 # MySQL Service
   mysql:
-    container_name: mysqldb
+    container_name: mysql
     build: ./sql/my-sql
     tty: true  # enable cli to interact with this container
     ports:
