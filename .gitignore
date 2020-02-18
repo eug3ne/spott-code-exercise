@@ -8,6 +8,8 @@
 # Don't track content of these folders
 #########################################
 laravel-app/vendor
+laravel-app/.composer
+laravel-app/composer.lock
 
 #########################################
 # Ingnore environment file
