@@ -1,0 +1,64 @@
+version: '3'
+
+# Internal network - isolate projects for better containerization
+networks:
+  spott:
+
+services:
+# Nginx Service
+  nginx:
+    image: nginx:stable-alpine
+    container_name: nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - ./misc:/var/www/html
+      - ./config/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - php
+      - mysql
+    networks:
+      - spott
+    restart: unless-stopped
+
+# MySQL Service
+  mysql:
+    container_name: mysqldb
+    build: ./sql/my-sql
+    tty: true  # enable cli to interact with this container
+    ports:
+      - "8306:3306"
+    volumes:
+    -  ./sql/my-sql:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: homestead
+      # So you don't have to use root, but you can if you like
+      MYSQL_USER: homestead
+      # You can use whatever password you like
+      MYSQL_PASSWORD: secret
+      # Password for root access
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_HOST: mysqldb
+      MYSQL_PORT: 8306
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    networks:
+      - spott
+    restart: unless-stopped
+
+# PHP Service
+  php:
+    container_name: app
+    build: ./php
+    networks:
+      - spott
+    ports:
+      - "9000:9000"
+    working_dir: /var/www/html
+    env_file: ./laravel-app/.env
+    volumes:
+      - ./laravel-app:/var/www/html
+      - ./php/php.ini:/usr/local/etc/php/php.ini
+    depends_on:
+      - mysql
+    restart: unless-stopped
