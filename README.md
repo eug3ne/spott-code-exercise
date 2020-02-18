@@ -14,5 +14,17 @@
      nginx - :8080
      mysql - :8306
      php - :9000
-
+     
+ ## Initialize Docker on Local Machine
+ Now we're ready to build and run our containers. Type this command in to start:
+ ~$ docker-compose build
+ ~$ docker-compose up -d
+ 
+ wait...wait...wait...and Voila!
+  
+     Creating mysql ... done
+     Creating app   ... done
+     Creating nginx ... done
+ 
+Now our Docker services (nginx,mysql,php) are running locally
 
