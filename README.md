@@ -2,7 +2,7 @@
  This week will be excited by writing and pushing new code in this repo... :-)
  
  ## Docket Environment Install
- A pretty simplified docker-compose workflow that sets up a LEMP network of containers for local Laravel development. You can view the full article that inspired this repo here.
+ A pretty simplified docker-compose workflow that sets up a LEMP network of containers for local Laravel development. You can view the full article that inspired this User guide : https://www.digitalocean.com/community/tutorials/how-to-set-up-laravel-nginx-and-mysql-with-docker-compose#step-2-%E2%80%94-creating-the-docker-compose-file .
  
  ## Laravel installation
  To get started, make sure you have Docker installed on your system, and then clone this repository. Add your entire Laravel project to the src folder, then open a terminal and from this cloned respository's root run docker-compose build && docker-compose up -d.

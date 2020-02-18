@@ -1,8 +1,9 @@
 version: '3'
 
-# Internal network - isolate projects for better containerization
+# Internal Docker network - isolate projects for better containerization
 networks:
   spott:
+    driver: bridge
 
 services:
 # Nginx Service
@@ -11,6 +12,7 @@ services:
     container_name: nginx
     ports:
       - "8080:80"
+      - "443:443"
     volumes:
       - ./laravel-app:/var/www
       - ./config/nginx/default.conf:/etc/nginx/conf.d/default.conf
@@ -23,35 +25,36 @@ services:
 
 # MySQL Service
   mysql:
-    container_name: mysql
+    container_name: mysqldb
     build: ./sql/my-sql
     tty: true  # enable cli to interact with this container
     ports:
       - "3306:3306"
-    volumes:
-    -  ./sql/my-sql:/var/lib/mysql
     environment:
-      MYSQL_DATABASE: homestead
-      MYSQL_USER: homestead
-      MYSQL_PASSWORD: secret
+      MYSQL_DATABASE: spottdb
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: laravel
       # Password for root access
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_HOST: mysql
+      MYSQL_HOST: mysqldb
       MYSQL_PORT: 3306
-      SERVICE_TAGS: dev
-      SERVICE_NAME: mysql
+    volumes:
+      - db:/var/lib/mysql
     networks:
       - spott
     restart: unless-stopped
 
-# PHP Service
+# App Service
   php:
-    build: ./php
+    build: ./laravel-app
     container_name: app
-
     ports:
       - "9000:9000"
     env_file: ./laravel-app/.env
+    environment:
+      SERVICE_TAGS: dev
+      SERVICE_NAME: php
+    working_dir: /var/www
     volumes:
       - ./laravel-app:/var/www
       - ./php/php.ini:/usr/local/etc/php/php.ini
@@ -60,3 +63,7 @@ services:
     networks:
       - spott
     restart: unless-stopped
+
+# This allows you to stop and restart the db service without losing data.
+volumes:
+  db:
