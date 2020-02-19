@@ -56,7 +56,7 @@ services:
     container_name: app
     ports:
       - "9000:9000"
-#    env_file: ./src/.env
+    env_file: ./src/.env
     environment:
       SERVICE_TAGS: dev
       SERVICE_NAME: php
