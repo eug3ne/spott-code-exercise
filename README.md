@@ -12,7 +12,7 @@
  Containers created and their ports are as follows:
  
      nginx - :8080
-     mysql - :8306
+     mysql - :3306
      php - :9000
      
  ## Initialize Docker on Local Machine
@@ -31,8 +31,8 @@ Now our Docker services (nginx,mysql,php) are running locally, let's check the s
      CONTAINER ID        IMAGE                 COMMAND                  CREATED             STATUS              PORTS                    NAMES
      804962a15939        nginx:stable-alpine   "nginx -g 'daemon of…"   20 seconds ago      Up 17 seconds       0.0.0.0:8080->80/tcp     nginx
      bb4259587954        sportradar_php        "docker-php-entrypoi…"   27 seconds ago      Up 23 seconds       0.0.0.0:9000->9000/tcp   app
-     fd1bf423101d        sportradar_mysql      "docker-entrypoint.s…"   30 seconds ago      Up 1 second         0.0.0.0:8306->3306/tcp   mysql
-                            mysql
+     fd1bf423101d        sportradar_mysql      "docker-entrypoint.s…"   30 seconds ago      Up 1 second         0.0.0.0:3306->3306/tcp   mysqldb
+
 
  
 
