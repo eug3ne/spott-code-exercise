@@ -5,8 +5,10 @@
  A pretty simplified docker-compose workflow that sets up a LEMP network of containers for local Laravel development. You can view the full article that inspired this User guide : https://www.digitalocean.com/community/tutorials/how-to-set-up-laravel-nginx-and-mysql-with-docker-compose#step-2-%E2%80%94-creating-the-docker-compose-file .
  
  ## Laravel installation
- To get started, make sure you have Docker installed on your system, and then clone this repository. Add your entire Laravel project to the src folder, then open a terminal and from this cloned respository's root run docker-compose build && docker-compose up -d.
+ To get started, make sure you have Docker installed on your system, and then clone this repository. Add your entire Laravel project to the src folder, then open a terminal and from this cloned respository's root run.
  
+    docker-compose build && docker-compose up -d
+     
  Open up your browser of choice to http://localhost:8080 and you should see your Laravel app running as intended.
  
  Containers created and their ports are as follows:
@@ -35,4 +37,17 @@ Now our Docker services (nginx,mysql,php) are running locally, let's check the s
 
 
  
+## Clone Laravel sourcecode
+
+     mkdir src/
+     git clone repo https://..... src
+     rm -rf src/.git
+     rm -rf README.md 
+     
+     
+## Run Composer to install dependencies
+
+     docker-compose exec php php composer install
+     docker-compose exec php php artisan key:generate
+     docker-compose exec php php composer cache:clear
 
