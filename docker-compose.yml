@@ -5,7 +5,13 @@ networks:
   spott:
     driver: bridge
 
+# This allows you to stop and restart the db service without losing data.
+volumes:
+  db:
+    driver: local
+
 services:
+
 # Nginx Service
   nginx:
     image: nginx:stable-alpine
@@ -63,7 +69,3 @@ services:
     networks:
       - spott
     restart: unless-stopped
-
-# This allows you to stop and restart the db service without losing data.
-volumes:
-  db:
