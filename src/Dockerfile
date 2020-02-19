@@ -1,7 +1,7 @@
 FROM php:7.2.2-fpm
 
 # Copy composer.json
-#COPY composer.json /var/www/
+COPY composer.json /var/www/
 
 # Install the dependencies and extensions required by Laravel
 RUN apt-get update && apt-get install -y \
@@ -29,7 +29,7 @@ RUN docker-php-ext-enable pdo_mysql
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install composer
-#RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Add user for laravel application with UID=1000
 RUN usermod -u 1000 www-data
@@ -44,11 +44,11 @@ WORKDIR /var/www
 COPY --chown=www-data:www-data . /var/www
 
 # Execute composer and install vendors lib
-#RUN composer install --prefer-source --no-interaction
-#ENV PATH="~/.composer/vendor/bin:./vendor/bin:${PATH}"
+RUN composer install --prefer-source --no-interaction
+ENV PATH="~/.composer/vendor/bin:./vendor/bin:${PATH}"
 
 # Copy composer.lock
-#COPY composer.lock  /var/www
+COPY composer.lock  /var/www
 
 # Change current user to www
 USER www-data
