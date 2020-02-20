@@ -58,3 +58,45 @@ Now our Docker services (nginx,mysql,php) are running locally, let's check the s
      docker-compose exec php php artisan key:generate
      docker-compose exec php php composer cache:clear
 
+## Table creation for Migration on laravel 
+
+     docker-compose exec php php artisan make:migration create_authors
+     docker-compose exec php php artisan make:create_books
+     
+Add to the new Classes "CreateAuthors" and "CreateBooks" the mondatory columns
+
+
+    class CreateAuthors extends Migration
+      public function up()
+         {
+             Schema::create('authors', function (Blueprint $table) {
+                 $table->bigIncrements('id');
+                 $table->string('name',20);
+                 $table->integer('age');
+                 $table->lineString('address');
+                 $table->timestamps();
+             });
+         } 
+         
+     ------------------------------------------------------------------
+     
+     class CreateBooks extends Migration
+     {
+         /**
+          * Run the migrations.
+          *
+          * @return void
+          */
+         public function up()
+         {
+             Schema::create('books', function (Blueprint $table) {
+                 $table->bigIncrements('id');
+                 $table->string('name',60);
+                 $table->date('release_date');
+                 $table->timestamps();
+             });
+         }
+         
+Then run the final command to create the tables + columns...Voila!
+
+     docker-compose exec php php artisan migrate
