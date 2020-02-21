@@ -88,14 +88,19 @@ Add to the new Classes "CreateAuthors" and "CreateBooks" the mondatory columns
           * @return void
           */
          public function up()
-         {
-             Schema::create('books', function (Blueprint $table) {
-                 $table->bigIncrements('id');
-                 $table->string('name',60);
-                 $table->date('release_date');
-                 $table->timestamps();
-             });
-         }
+             {
+                 Schema::create('books', function (Blueprint $table) {
+                     $table->bigIncrements('id');
+                     $table->unsignedBigInteger('author_id');
+                     $table->string('name',60);
+                     $table->date('release_date');
+                     $table->timestamps();
+                 });
+         
+                 Schema::table('books', function (Blueprint $table){
+                     $table->foreign('author_id')->references('id')->on('authors');
+                 });
+             }
          
 Then run the final command to create the tables + columns...Voila!
 
