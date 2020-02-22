@@ -9,7 +9,7 @@ App specifications:
 - Laravel 6.16.0
 - MySql 5.7.22
 - Nginx 1.9
-- VueJS 2.x
+- Blade 2.x
  
  ## Laravel installation
  To get started, make sure you have Docker installed on your system, and then clone this repository. Add your entire Laravel project to the `src/` folder, then open a terminal and  cloned  Laravel respository.
@@ -56,7 +56,7 @@ Now our Docker services (nginx,mysql,php) are running locally, let's check the s
 
      docker-compose exec php php composer install
      docker-compose exec php php artisan key:generate
-     docker-compose exec php php composer cache:clear
+     docker-compose exec php php artisan cache:clear
 
 ## Table creation for Migration on laravel 
 

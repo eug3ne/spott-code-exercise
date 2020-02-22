@@ -17,7 +17,7 @@ class CreateBooks extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('author_id');
             $table->string('name',60);
-            $table->date('release_date');
+            $table->dateTime('release_date');
             $table->timestamps();
         });
 

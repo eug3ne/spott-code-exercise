@@ -2,16 +2,16 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\AuthorModel as Author;
+use App\Author;
 use Faker\Generator as Faker;
 
 $factory->define(Author::class, function (Faker $faker) {
 
-    $authorFactory = [
-        'name' => $faker->name,
-        'age' => $faker->randomDigitNotNull,
-        'address' => $faker->address
+    $author = [
+        'name'      => $faker->name,
+        'age'       => $faker->randomNumber(2),
+        'address'   => $faker->streetAddress
     ];
 
-    return $authorFactory;
+    return $author;
 });

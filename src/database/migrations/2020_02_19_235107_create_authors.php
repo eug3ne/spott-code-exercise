@@ -15,9 +15,9 @@ class CreateAuthors extends Migration
     {
         Schema::create('authors', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name',20);
+            $table->string('name',60);
             $table->integer('age');
-            $table->lineString('address');
+            $table->string('address');
             $table->timestamps();
         });
     }
