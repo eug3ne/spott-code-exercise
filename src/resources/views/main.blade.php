@@ -12,31 +12,41 @@
     </div>
     <br/>
 
-    <form action="/" method="POST"  class="">
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">Author's:</span>
-            </div>
-            <input type="text" name="firstName" class="form-control" placeholder="First Name">
-            <input type="text" name="lastName" class="form-control" placeholder="Last Name">
-        </div>
+    <p>
 
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">Book's:</span>
-            </div>
-            <input type="text" name="bookTitle" class="form-control" placeholder="Title">
-            <input type="text" name="releaseDate" class="form-control" placeholder="Release Date">
-        </div>
+        <button class="btn btn-outline-secondary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+            Add New Book
+        </button>
+        <button class="btn btn-info" type="button">
+            Refresh
+        </button>
+    </p>
+    <div class="collapse" id="collapseExample">
+        <div class="card card-body">
+            <form action="/" method="POST"  class="">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Author's:</span>
+                    </div>
+                    <input type="text" name="firstName" class="form-control" placeholder="First Name"/>
+                    <input type="text" name="lastName" class="form-control" placeholder="Last Name"/>
+                </div>
 
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Book's:</span>
+                    </div>
+                    <input type="text" name="bookTitle" class="form-control" placeholder="Title"/>
+                    <input type="text" name="releaseDate"  class="form-control" placeholder="Release Date"/>
 
+                </div>
 
-        <button type="submit">Add Book</button>
+                <button type="button" class="btn btn-outline-success">Add Book</button>
 
-        {{--Validation for cross-origin--}}
-        @csrf
-    </form>
-
+                {{--Validation for cross-origin--}}
+                @csrf
+            </form>        </div>
+    </div>
 
     <div class="container">
         <h2>My collection</h2>

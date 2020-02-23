@@ -13,3 +13,4 @@ npm-debug.log
 yarn-error.log
 /storage/logs/laravel.log
 /.bash_history
+/storage/logs/laravel.log
