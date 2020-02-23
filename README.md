@@ -61,7 +61,7 @@ Now our Docker services (nginx,mysql,php) are running locally, let's check the s
 ## Table creation for Migration on laravel 
 
      docker-compose exec php php artisan make:migration create_authors
-     docker-compose exec php php artisan make:create_books
+     docker-compose exec php php artisan make:migration create_books
      
 Add to the new Classes "CreateAuthors" and "CreateBooks" the mondatory columns
 
@@ -105,3 +105,72 @@ Add to the new Classes "CreateAuthors" and "CreateBooks" the mondatory columns
 Then run the final command to create the tables + columns...Voila!
 
      docker-compose exec php php artisan migrate
+     
+## Seeding and factory 
+
+
+    -- AuthorFactory
+    
+    $factory->define(Author::class, function (Faker $faker) {
+    $author = [
+        'name'      => $faker->name,
+        'age'       => $faker->randomNumber(2),
+        'address'   => $faker->streetAddress
+    ];
+
+    return $author;
+
+     ------------------------------------------------------------------
+     
+     -- BookFactory
+     
+     $factory->define(Book::class, function (Faker $faker) {
+    
+         $book = [
+             'name'          => $faker->text(60),
+             'author_id'     => $faker->numberBetween(1,10),
+             'release_date'  => $faker->unique()->dateTime('now'),
+         ];
+     
+         return $book;
+     });
+     
+
+     -- Author Seed
+     
+     class AuthorsTableSeeder extends Seeder
+     {
+         /**
+          * Run the database seeds.
+          *
+          * @return void
+          */
+         public function run()
+         {
+             factory(Author::class,10)->create();
+         }
+     }
+     
+     ---------------------------------------------
+     
+     -- Book Seed
+     
+     class BooksTableSeeder extends Seeder
+     {
+         /**
+          * Run the database seeds.
+          *
+          * @return void
+          */
+         public function run()
+         {
+             factory(Book::class,30)->create();
+         }
+     }
+     
+When files are ready and execute the following command to mock the table with data
+
+    docker-compose exec php php artisan migrate:fresh
+    
+    docker-compose exec php php artisan db:seed
+
