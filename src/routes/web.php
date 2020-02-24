@@ -12,5 +12,6 @@
 */
 
 Route::get('/', 'DataController@fetch');
+Route::get('r', 'DataController@fetch');
 
 Route::post('/', 'DataController@store');
