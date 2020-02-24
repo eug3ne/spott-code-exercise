@@ -8,58 +8,71 @@ use Illuminate\Http\Request;
 
 class DataController extends Controller
 {
+    private $authorTable    = 'authors';
+    private $bookTable      = 'books';
+    private $view           = 'main';
+
+    /**
+     * Retrieve all the data for book collection
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function fetch()
     {
-        // retrieve all records from Authors table
-        $authors = Author::all();
-        $books   = Book::all();
+        $data = Book::leftJoin("$this->authorTable", "$this->authorTable.id", '=' , "$this->bookTable.author_id")
+            ->select("$this->bookTable.name AS title", "$this->bookTable.release_date","$this->authorTable.name")
+            ->get();
 
-
-        return view('main' , [
-            'authors' => $authors,
-            'books' => $books
+        return view("$this->view" , [
+            'collection' => $data
         ]);
     }
 
 
+    /**
+     * Receive the data from the request and store them to
+     * the relevant tables
+     *
+     * @param \http\Client\Request
+     */
     public function store()
     {
+
         if ($this->formValidation()) {
             $author = new Author();
             $author->name = request('firstName') . ' ' . request('lastName');
             $author->age = request('age');
             $author->address = request('address');
             $author->save();
+//            dd($author->id);
 
             $book = new Book();
             $book->name = request('bookTitle');
-            $book->release_date = request('releaseDate');
-        //        $book->save();
+            $book->author_id = intval($author->id);
+            $book->release_date = request('releaseDate') . ' ' . date("H:i:s");
+            $book->save();
         }
-
-//        dd($author->name);
-        dd($book->name);
 
     }
 
     /**
-     * This function is checking for the incoming inputs and validate the correct
-     * data format before saving them into the database
+     * Checking for the incoming inputs and validate the correct
+     * data format before saving them into the database.
      *
      * @return boolean
      */
-    private function formValidation(){
+    private function formValidation()
+    {
         $check = request()->validate([
-            'firstName' => 'required|min 3',
-            'lastName' => 'required|min 3',
+            'firstName' => 'required|min:3',
+            'lastName' => 'required|min:3',
             'age' => 'required|integer|between:1,150',
-            'address' => 'required|min 3',
-            'bookTitle' => 'required|min 3',
-            'releaseDate' => 'required|date_format:d-m-Y',
+            'address' => 'required|min:3',
+            'bookTitle' => 'required|min:3',
+            'releaseDate' => 'required|date_format:Y-m-d',
         ]);
 
         return $check;
-
     }
 
 }

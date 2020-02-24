@@ -36,7 +36,7 @@
                 <span class="input-group-text">Book's:</span>
             </div>
             <input type="text" name="bookTitle" class="form-control" placeholder="Title"/>
-            <input type="text" name="releaseDate"  class="form-control" placeholder="Release Date"/>
+            <input type="text" name="releaseDate"  class="form-control" placeholder="Release Date in YYYY-MM-DD"/>
         </div>
 
         <button type="submit" class="btn btn-outline-success">Add Book</button>
@@ -58,8 +58,9 @@
     <div class="collapse" id="collapseExample">
         <div class="card card-body">
 
+
             <h2>My collection</h2>
-            <table class="table table-dark table-striped">
+            <table id="table" class="table table-bordered">
                 <thead>
                 <tr>
                     <th>Author</th>
@@ -68,16 +69,15 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($authors as $author)
+                @foreach($collection as $datum)
                     <tr>
-                        <td>{{ $author->name }}</td>
-                        <td>Doe</td>
-                        <td>john@example.com</td>
+                        <td>{{ $datum->name }}</td>
+                        <td>{{ $datum->title }}</td>
+                        <td>{{ $datum->release_date }}</td>
                     </tr>
                 @endforeach
                 </tbody>
             </table>
-
         </div>
     </div>
 
